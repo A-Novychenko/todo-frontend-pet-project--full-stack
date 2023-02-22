@@ -1,0 +1,17 @@
+[
+  {
+    "id": "task-1",
+    "description": "Lorem ipsum dolor sit amet consectetur adipisicing elit. Iste, voluptate. Beatae aliquam blanditiis ipsum, quod facere ut recusandae doloremque. Alias qui in laboriosam eos consequatur!",
+    "completed": true
+  },
+  {
+    "id": "task-2",
+    "description": "Lorem ipsum dolor sit amet consectetur adipisicing elit. Iste, voluptate. Beatae aliquam blanditiis ipsum, quod facere ut recusandae doloremque. Alias qui in laboriosam eos consequatur!",
+    "completed": false
+  },
+  {
+    "id": "task-3",
+    "description": "Lorem ipsum dolor sit amet consectetur adipisicing elit. Iste, voluptate. Beatae aliquam blanditiis ipsum, quod facere ut recusandae doloremque. Alias qui in laboriosam eos consequatur!",
+    "completed": true
+  }
+]
