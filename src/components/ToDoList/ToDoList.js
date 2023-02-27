@@ -1,37 +1,21 @@
 import PropTypes from 'prop-types';
-import { RiDeleteBinLine } from 'react-icons/ri';
 
-// import { ToDo } from 'components/ToDo';
+import { ToDo } from 'components/ToDo';
+import { List, Item } from './ToDoList.styled';
 
-import { List, Item, Description } from './ToDoList.styled';
-
-export const TodoList = ({
-  todos,
-  onDeleteTodo,
-  getDataModal,
-  isOpenModal,
-}) => (
+export const TodoList = ({ todos, onDeleteTodo, onCompletedTodo }) => (
   <List>
-    {todos.map(({ id, description, completed }) => (
-      <Item
-        key={id}
-        onClick={() => {
-          getDataModal(id);
-          isOpenModal();
-        }}
-      >
-        <Description completed={completed}>{description}</Description>
-        <RiDeleteBinLine
-          type="button"
-          onClick={() => onDeleteTodo(id)}
-          size={100}
-        >
-          Удалить
-        </RiDeleteBinLine>
+    {todos.map(({ id, text, completed }) => (
+      <Item key={id}>
+        <ToDo
+          completed={completed}
+          text={text}
+          onDeleteTodo={onDeleteTodo}
+          onCompletedTodo={onCompletedTodo}
+          id={id}
+        ></ToDo>
       </Item>
     ))}
-    1.Сделать делегирование/клик по кнопке на удаление 2. Проверить пропсы(после
-    рефакторинга) *Добавить кнопку редактирования/ипут...
   </List>
 );
 
@@ -39,6 +23,8 @@ TodoList.propTypes = {
   todos: PropTypes.arrayOf(
     PropTypes.shape({
       id: PropTypes.string.isRequired,
+      text: PropTypes.string.isRequired,
+      completed: PropTypes.bool.isRequired,
     }).isRequired
   ).isRequired,
 };

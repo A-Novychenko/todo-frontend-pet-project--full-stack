@@ -1,20 +1,38 @@
-// import PropTypes from 'prop-types';
-// import { Description } from './ToDo.styled';
+import PropTypes from 'prop-types';
+import { RiDeleteBinLine } from 'react-icons/ri';
+import { Description } from './ToDo.styled';
 
-// export const ToDo = ({ completed, description, onDeleteTodo, id }) => {
-//   return (
-//     <>
-//       <Description completed={completed}>{description}</Description>
-//       <button type="button" onClick={() => onDeleteTodo(id)}>
-//         Удалить
-//       </button>
-//     </>
-//   );
-// };
+export const ToDo = ({
+  completed,
+  text,
+  onDeleteTodo,
+  onCompletedTodo,
+  id,
+}) => {
+  return (
+    <>
+      <input
+        type="checkbox"
+        name="checkbox"
+        checked={completed}
+        onChange={() => onCompletedTodo(id)}
+      ></input>
+      <Description completed={completed}>{text}</Description>
+      <RiDeleteBinLine
+        type="button"
+        className="js-deleteId"
+        onClick={e => onDeleteTodo(id)}
+        size={32}
+      >
+        Удалить
+      </RiDeleteBinLine>
+    </>
+  );
+};
 
-// ToDo.propTypes = {
-//   completed: PropTypes.bool.isRequired,
-//   description: PropTypes.string.isRequired,
-//   onDeleteTodo: PropTypes.func.isRequired,
-//   id: PropTypes.string.isRequired,
-// };
+ToDo.propTypes = {
+  onDeleteTodo: PropTypes.func.isRequired,
+  id: PropTypes.string.isRequired,
+  text: PropTypes.string.isRequired,
+  completed: PropTypes.bool.isRequired,
+};

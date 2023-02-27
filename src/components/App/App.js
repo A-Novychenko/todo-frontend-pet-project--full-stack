@@ -1,31 +1,40 @@
 import { TodoList } from 'components/ToDoList';
 import { Component } from 'react';
 import { Container, Title } from './App.styled';
-import { Backdrop } from 'components/Modal/Modal';
-import todosInitial from '../../dataBase/todosInitial.json';
+import { FormAdd } from 'components/FormAdd/FormAdd';
+import { GlobalStyle } from 'constants/GlobalStyle';
 
 export class App extends Component {
   state = {
-    todos: todosInitial,
-    isOpen: false,
-    currentItem: {},
+    todos: [],
   };
 
-  openModal = () => {
-    this.setState({
-      isOpen: true,
-    });
-  };
+  componentDidMount() {
+    const todos = JSON.parse(localStorage.getItem('todos'));
+    if (todos !== null) {
+      this.setState({ todos });
+    }
+  }
 
-  closeModal = () => {
-    this.setState({
-      isOpen: false,
-    });
-  };
+  componentDidUpdate(prevProps, prevState) {
+    if (prevState.todos !== this.state.todos) {
+      localStorage.setItem('todos', JSON.stringify(this.state.todos));
+    }
+  }
 
   onDeleteTodo = id =>
     this.setState(prevState => ({
       todos: prevState.todos.filter(todo => todo.id !== id),
+    }));
+
+  onCompletedTodo = id =>
+    this.setState(prevState => ({
+      todos: prevState.todos.map(todo => {
+        if (todo.id === id) {
+          return { ...todo, completed: !todo.completed };
+        }
+        return todo;
+      }),
     }));
 
   fulfillmentCount = () =>
@@ -34,33 +43,33 @@ export class App extends Component {
       0
     );
 
-  getDataModal = itemId => {
-    this.setState({
-      currentItem: this.state.todos.find(({ id }) => id === itemId),
-    });
+  onChangeTodos = addsTodos => {
+    this.setState(prevState => ({
+      todos: [...prevState.todos, addsTodos],
+    }));
   };
 
   render() {
-    const { todos, isOpen } = this.state;
+    const { todos } = this.state;
     return (
-      <Container>
-        <Title>To Do</Title>
-        <div>
-          <p>Общее количество: {todos.length}</p>
-          <p>Количество к выполнению: {this.fulfillmentCount()}</p>
-        </div>
-        <TodoList
-          todos={todos}
-          onDeleteTodo={this.onDeleteTodo}
-          isOpenModal={this.openModal}
-          getDataModal={this.getDataModal}
-        />
-        <Backdrop
-          isOpenModal={isOpen}
-          isCloseModal={this.closeModal}
-          data={this.state.currentItem}
-        ></Backdrop>
-      </Container>
+      <>
+        <Container>
+          <Title>To Do</Title>
+          <div>
+            <p>Общее количество: {todos.length}</p>
+            <p>Количество к выполнению: {this.fulfillmentCount()}</p>
+          </div>
+          <FormAdd onChange={this.onChangeTodos}></FormAdd>
+          {todos && (
+            <TodoList
+              todos={todos}
+              onDeleteTodo={this.onDeleteTodo}
+              onCompletedTodo={this.onCompletedTodo}
+            />
+          )}
+        </Container>
+        <GlobalStyle />
+      </>
     );
   }
 }

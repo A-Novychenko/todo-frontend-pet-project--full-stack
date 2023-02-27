@@ -20,6 +20,9 @@ export const Item = styled.li`
   border-radius: 8px;
 
   cursor: pointer;
+
+  width: 400px;
+  height: 200px;
 `;
 
 export const Description = styled.p`
