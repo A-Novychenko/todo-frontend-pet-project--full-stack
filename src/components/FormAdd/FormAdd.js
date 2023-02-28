@@ -21,8 +21,9 @@ export class FormAdd extends Component {
     const id = nanoid();
     const { text } = values;
     const completed = false;
+    const priority = false;
 
-    this.props.onChange({ id, text, completed });
+    this.props.onChange({ id, text, completed, priority });
     resetForm();
   };
 

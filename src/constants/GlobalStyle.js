@@ -42,9 +42,7 @@ img {
   max-width: 100%;
   height: auto;
 }
-.list {
-  list-style: none;
-}
+
 
 
 `;
