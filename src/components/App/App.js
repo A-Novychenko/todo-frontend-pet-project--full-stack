@@ -14,6 +14,7 @@ import {
 import { FormAdd } from 'components/FormAdd/FormAdd';
 import { GlobalStyle } from 'constants/GlobalStyle';
 import { Modal, CloseBtn } from 'components/Modal';
+import { Time } from 'components/Time';
 
 export class App extends Component {
   state = {
@@ -21,6 +22,13 @@ export class App extends Component {
     showModal: false,
     page: 'all',
   };
+
+  // shouldComponentUpdate(nextProps, nextState) {
+  //   return (
+  //      this.state.page !== nextState.page
+  //   );
+  // }
+  // при перезагрузке/первой загрузке не происходит ре-рендер с локалстореджа
 
   componentDidMount() {
     const todos = JSON.parse(localStorage.getItem('todos'));
@@ -109,12 +117,12 @@ export class App extends Component {
       <>
         <Header>
           <Container>
+            <Time />
             <Title>To Do</Title>
             <div>
               <p>Загальна кількість: {todos.length}</p>
               <p>До виконання: {fulfillmentCount()}</p>
             </div>
-
             <Controls>
               <Btns>
                 <BtnPage

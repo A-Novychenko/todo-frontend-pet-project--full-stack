@@ -2,7 +2,17 @@ import { Component } from 'react';
 import PropTypes from 'prop-types';
 import { Formik } from 'formik';
 import { nanoid } from 'nanoid';
+import Notiflix from 'notiflix';
 import { FormWrap, Textarea, FormContainer, SaveBtn } from './FormAdd.styled';
+
+Notiflix.Notify.init({
+  width: '500px',
+  position: 'center-center',
+  closeButton: false,
+  useIcon: false,
+  fontSize: '20px',
+  timeout: 1500,
+});
 
 export class FormAdd extends Component {
   handleForm = (values, { resetForm }) => {
@@ -11,9 +21,15 @@ export class FormAdd extends Component {
     const completed = false;
     const priority = false;
 
-    this.props.onChange({ id, text, completed, priority });
-    resetForm();
-    this.props.onClose();
+    if (text.trim().length) {
+      this.props.onChange({ id, text, completed, priority });
+      resetForm();
+      this.props.onClose();
+    } else {
+      Notiflix.Notify.failure(
+        'Нічого не записали! Для збереження запишіть щось в текстове поле'
+      );
+    }
   };
 
   render() {
