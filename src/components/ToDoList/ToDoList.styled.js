@@ -8,19 +8,10 @@ export const List = styled.ul`
   margin-top: 20px;
   margin-bottom: 30px;
 `;
-// export const List = styled.ul`
-//   display: grid;
-//   grid-template-columns: repeat(auto-fit, minmax(240px, auto));
-//   gap: 24px;
-//   padding-left: 32px;
-//   padding-right: 32px;
-
-//   list-style: none;
-// `;
 
 export const Item = styled.li`
   flex-basis: calc((100% - 60px) / 3);
-  border: 1px solid grey;
+  border: 1px solid green;
   border-radius: 8px;
   min-height: 200px;
 
@@ -36,31 +27,26 @@ export const Item = styled.li`
 
   overflow: hidden;
   cursor: pointer;
+
+  box-shadow: 9px 7px 19px 7px rgba(42, 79, 42, 0.57);
+  -webkit-box-shadow: 9px 7px 19px 7px rgba(42, 79, 42, 0.57);
+  -moz-box-shadow: 9px 7px 19px 7px rgba(42, 79, 42, 0.57);
+
+  transform: scale(1);
+
+  transition: transform 200ms linear;
+
+  &:hover {
+    transform: scale(1.05);
+    z-index: 999;
+  }
 `;
-
-// export const Item = styled.li`
-//   display: flex;
-
-//   padding-left: 32px;
-//   padding-right: 32px;
-
-//   border: 1px solid grey;
-//   border-radius: 8px;
-
-//   cursor: pointer;
-
-//   width: 400px;
-//   height: 200px;
-// `;
 
 export const Description = styled.p`
   text-decoration: ${props => (props.completed ? 'line-through' : 'none')};
 `;
 
 export const AddItem = styled.button`
-  /* display: flex;
-  flex-basis: calc((100% - 60px) / 3);
-  border: 1px solid grey; */
   border-radius: 8px;
   min-height: 200px;
   background-color: white;
@@ -69,18 +55,12 @@ export const AddItem = styled.button`
 
   border: none;
   cursor: pointer;
+
+  color: green;
+  transition: color 200ms linear, background-color 200ms linear;
+
+  &:hover {
+    background-color: green;
+    color: white;
+  }
 `;
-// export const AddItem = styled.button`
-//   display: flex;
-
-//   padding-left: 32px;
-//   padding-right: 32px;
-
-//   border: 1px solid grey;
-//   border-radius: 8px;
-
-//   cursor: pointer;
-
-//   width: 400px;
-//   height: 200px;
-// `;

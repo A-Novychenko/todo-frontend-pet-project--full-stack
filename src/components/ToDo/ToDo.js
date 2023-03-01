@@ -37,6 +37,7 @@ export const ToDo = ({
                 className="js-deleteId"
                 onClick={e => onHighPriorityTodo(id)}
                 size={28}
+                fill={'darkgoldenrod'}
               ></MdLowPriority>
             ) : (
               <FcHighPriority
@@ -52,6 +53,7 @@ export const ToDo = ({
               className="js-deleteId"
               onClick={e => onCompletedTodo(id)}
               size={28}
+              fill={'darkgoldenrod'}
             ></MdSettingsBackupRestore>
           ) : (
             <MdOutlineDoneOutline
@@ -59,6 +61,7 @@ export const ToDo = ({
               className="js-deleteId"
               onClick={e => onCompletedTodo(id)}
               size={28}
+              fill={'green'}
             ></MdOutlineDoneOutline>
           )}
 
@@ -67,6 +70,7 @@ export const ToDo = ({
             className="js-deleteId"
             onClick={e => onDeleteTodo(id)}
             size={28}
+            fill={'brown'}
           ></RiDeleteBinLine>
         </InnerToDo>
       </WrapToDo>

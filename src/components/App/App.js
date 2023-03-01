@@ -1,5 +1,6 @@
 import { TodoList } from 'components/ToDoList';
 import { Component } from 'react';
+import { GrClose } from 'react-icons/gr';
 import {
   Container,
   Header,
@@ -12,7 +13,7 @@ import {
 } from './App.styled';
 import { FormAdd } from 'components/FormAdd/FormAdd';
 import { GlobalStyle } from 'constants/GlobalStyle';
-import { Modal } from 'components/Modal';
+import { Modal, CloseBtn } from 'components/Modal';
 
 export class App extends Component {
   state = {
@@ -162,9 +163,9 @@ export class App extends Component {
             <>
               <Modal toggleModal={toggleModal}>
                 <FormAdd onChange={onChangeTodos}></FormAdd>
-                <button type="button" onClick={toggleModal}>
-                  Close
-                </button>
+                <CloseBtn type="button" onClick={toggleModal}>
+                  <GrClose size={24}></GrClose>
+                </CloseBtn>
               </Modal>
             </>
           )}

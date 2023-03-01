@@ -11,11 +11,8 @@ export const Textarea = styled(Field)`
   display: flex;
   justify-content: center;
 
-  /* margin-right: auto;
-  margin-left: auto; */
-
-  width: 400px;
-  height: 200px;
+  width: 420px;
+  /* height: 200px; */
 
   font-size: 20px;
 `;
@@ -23,19 +20,35 @@ export const Textarea = styled(Field)`
 export const FormContainer = styled.div`
   display: flex;
   justify-content: center;
+  flex-direction: column;
+  /* margin-top: 72px; */
+  margin-right: auto;
+  margin-left: auto;
+  padding: 40px;
 
-  width: 400px;
-  height: 200px;
+  width: 500px;
+  /* height: 200px; */
 `;
 
-export const AddContainer = styled.div`
-  display: flex;
-  justify-content: center;
-  flex-direction: column;
-  margin-top: 72px;
+export const SaveBtn = styled.button`
+  padding: 12px;
+  width: 240px;
+  margin-top: 20px;
   margin-right: auto;
   margin-left: auto;
 
-  width: 400px;
-  height: 200px;
+  border-radius: 8px;
+  border: 1px solid green;
+
+  color: green;
+  font-weight: 500;
+
+  background-color: white;
+
+  cursor: pointer;
+  /* transition: color 250ms linear, background-color 250ms linear; */
+  :hover {
+    background-color: green;
+    color: white;
+  }
 `;

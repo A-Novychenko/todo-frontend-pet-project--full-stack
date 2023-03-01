@@ -29,6 +29,10 @@ export const Title = styled.h1`
 
 export const Controls = styled.div`
   margin-bottom: 30px;
+
+  button {
+    transition: color 250ms linear, background-color 250ms linear;
+  }
 `;
 
 export const Btns = styled.div`
@@ -38,7 +42,7 @@ export const Btns = styled.div`
   margin-top: 20px;
   margin-left: auto;
   margin-right: auto;
-  /* width: 400px; */
+
   button:hover {
     background-color: green;
     color: white;
@@ -92,8 +96,10 @@ export const AddBtn = styled.button`
   color: green;
   font-weight: 500;
 
-  cursor: pointer;
+  background-color: white;
 
+  cursor: pointer;
+  /* transition: color 250ms linear, background-color 250ms linear; */
   :nth-child(2):hover {
     background-color: red;
     color: white;

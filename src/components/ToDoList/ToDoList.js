@@ -14,54 +14,58 @@ export const TodoList = ({
   <>
     {(page === 'all' || page === 'completed') && (
       <>
-        <h2>Виконані</h2>
         {todos.find(todo => todo.completed) && (
-          <List>
-            {todos.map(
-              ({ id, text, completed }) =>
-                completed && (
-                  <Item key={id} backgroundColorDone>
-                    <ToDo
-                      completed={completed}
-                      text={text}
-                      onDeleteTodo={onDeleteTodo}
-                      onCompletedTodo={onCompletedTodo}
-                      onHighPriorityTodo={onHighPriorityTodo}
-                      id={id}
-                    ></ToDo>
-                  </Item>
-                )
-            )}
-          </List>
+          <>
+            <h2>Виконані</h2>
+            <List>
+              {todos.map(
+                ({ id, text, completed }) =>
+                  completed && (
+                    <Item key={id} backgroundColorDone>
+                      <ToDo
+                        completed={completed}
+                        text={text}
+                        onDeleteTodo={onDeleteTodo}
+                        onCompletedTodo={onCompletedTodo}
+                        onHighPriorityTodo={onHighPriorityTodo}
+                        id={id}
+                      ></ToDo>
+                    </Item>
+                  )
+              )}
+            </List>
+          </>
         )}
       </>
     )}
 
     {(page === 'all' || page === 'active') && (
       <>
-        <h2>Важливі</h2>
         {todos.find(todo => todo.priority) && (
-          <List>
-            {todos.map(
-              ({ id, text, completed, priority }) =>
-                priority && (
-                  <Item key={id} backgroundColorPriority>
-                    <ToDo
-                      completed={completed}
-                      priority={priority}
-                      text={text}
-                      onDeleteTodo={onDeleteTodo}
-                      onCompletedTodo={onCompletedTodo}
-                      onHighPriorityTodo={onHighPriorityTodo}
-                      id={id}
-                    ></ToDo>
-                  </Item>
-                )
-            )}
-          </List>
+          <>
+            <h2>Важливі</h2>
+            <List>
+              {todos.map(
+                ({ id, text, completed, priority }) =>
+                  priority && (
+                    <Item key={id} backgroundColorPriority>
+                      <ToDo
+                        completed={completed}
+                        priority={priority}
+                        text={text}
+                        onDeleteTodo={onDeleteTodo}
+                        onCompletedTodo={onCompletedTodo}
+                        onHighPriorityTodo={onHighPriorityTodo}
+                        id={id}
+                      ></ToDo>
+                    </Item>
+                  )
+              )}
+            </List>
+          </>
         )}
 
-        <h2>Звичайні</h2>
+        {todos && <h2>Звичайні</h2>}
         <List>
           {todos &&
             todos.map(
@@ -83,10 +87,7 @@ export const TodoList = ({
 
           <Item>
             <AddItem type="button" onClick={onToggleModal}>
-              <MdOutlineAddCircleOutline
-                size={96}
-                color={'green'}
-              ></MdOutlineAddCircleOutline>
+              <MdOutlineAddCircleOutline size={96}></MdOutlineAddCircleOutline>
             </AddItem>
           </Item>
         </List>
