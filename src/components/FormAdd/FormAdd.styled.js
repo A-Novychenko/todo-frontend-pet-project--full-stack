@@ -12,7 +12,6 @@ export const Textarea = styled(Field)`
   justify-content: center;
 
   width: 420px;
-  /* height: 200px; */
 
   font-size: 20px;
 `;
@@ -21,13 +20,12 @@ export const FormContainer = styled.div`
   display: flex;
   justify-content: center;
   flex-direction: column;
-  /* margin-top: 72px; */
+
   margin-right: auto;
   margin-left: auto;
   padding: 40px;
 
   width: 500px;
-  /* height: 200px; */
 `;
 
 export const SaveBtn = styled.button`
@@ -46,7 +44,7 @@ export const SaveBtn = styled.button`
   background-color: white;
 
   cursor: pointer;
-  /* transition: color 250ms linear, background-color 250ms linear; */
+
   :hover {
     background-color: green;
     color: white;

@@ -30,7 +30,4 @@ export const Description = styled.p`
   padding: 20px 24px;
   background-color: white;
   text-align: left;
-  /* border-right: 1px solid #eee;
-  border-bottom: 1px solid #eee;
-  border-left: 1px solid #eee; */
 `;

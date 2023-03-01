@@ -13,6 +13,7 @@ export class FormAdd extends Component {
 
     this.props.onChange({ id, text, completed, priority });
     resetForm();
+    this.props.onClose();
   };
 
   render() {

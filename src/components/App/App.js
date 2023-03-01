@@ -88,6 +88,12 @@ export class App extends Component {
     }));
   };
 
+  clearTodos = () => {
+    this.setState({
+      todos: [],
+    });
+  };
+
   render() {
     const { todos, showModal, page } = this.state;
     const fulfillmentCount = this.fulfillmentCount;
@@ -97,6 +103,7 @@ export class App extends Component {
     const onDeleteTodo = this.onDeleteTodo;
     const toggleModal = this.toggleModal;
     const changePage = this.changePage;
+    const clearTodos = this.clearTodos;
 
     return (
       <>
@@ -143,7 +150,7 @@ export class App extends Component {
                 <AddBtn type="button" onClick={toggleModal}>
                   Додати картку
                 </AddBtn>
-                <AddBtn type="button" onClick={toggleModal}>
+                <AddBtn type="button" onClick={clearTodos}>
                   Очистити все
                 </AddBtn>
               </AddDelBtnWrap>
@@ -160,14 +167,12 @@ export class App extends Component {
             onToggleModal={toggleModal}
           />
           {showModal && (
-            <>
-              <Modal toggleModal={toggleModal}>
-                <FormAdd onChange={onChangeTodos}></FormAdd>
-                <CloseBtn type="button" onClick={toggleModal}>
-                  <GrClose size={24}></GrClose>
-                </CloseBtn>
-              </Modal>
-            </>
+            <Modal onClose={toggleModal}>
+              <FormAdd onChange={onChangeTodos} onClose={toggleModal}></FormAdd>
+              <CloseBtn type="button" onClick={toggleModal}>
+                <GrClose size={24}></GrClose>
+              </CloseBtn>
+            </Modal>
           )}
         </Container>
         <GlobalStyle />
