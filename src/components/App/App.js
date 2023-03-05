@@ -1,200 +1,30 @@
-import { TodoList } from 'components/ToDoList';
-import { Component } from 'react';
-import { GrClose } from 'react-icons/gr';
-import {
-  Container,
-  Header,
-  Title,
-  Btns,
-  BtnPage,
-  AddBtn,
-  AddDelBtnWrap,
-  Controls,
-} from './App.styled';
 import { FormAdd } from 'components/FormAdd/FormAdd';
+import { CloseBtn, Modal } from 'components/Modal';
 import { GlobalStyle } from 'constants/GlobalStyle';
-import { Modal, CloseBtn } from 'components/Modal';
-import { Time } from 'components/Time';
-// import { addTodo, getTodo } from 'services/api';
+import { useState } from 'react';
+import { GrClose } from 'react-icons/gr';
+import { Control } from '../Control';
 
-export class App extends Component {
-  state = {
-    todos: [],
-    showModal: false,
-    page: 'all',
-    // id: 0,
+export const App = () => {
+  const [todo, setTodo] = useState(null);
+  const [showModal, setShowModal] = useState(false);
+
+  const onChange = addTodo => {
+    setTodo(addTodo);
   };
-
-  // shouldComponentUpdate(nextProps, nextState) {
-  //   return (
-  //      this.state.page !== nextState.page
-  //   );
-  // }
-  // при перезагрузке/первой загрузке не происходит ре-рендер с локалстореджа
-
-  componentDidMount() {
-    // const todos = getTodo();
-    // if (todos !== null) {
-    //   this.setState({ todos });
-    // }
-    const todos = JSON.parse(localStorage.getItem('todos'));
-    if (todos !== null) {
-      this.setState({ todos });
-    }
-  }
-
-  async componentDidUpdate(prevProps, prevState) {
-    if (prevState.todos !== this.state.todos) {
-      // const todos = await addTodo(this.state.todos);
-      // this.setState(prevState => ({
-      //   todos: [...prevState.todos, todos],
-      // }));
-      localStorage.setItem('todos', JSON.stringify(this.state.todos));
-    }
-  }
-
-  changePage = type => {
-    this.setState({ page: type });
-  };
-
-  toggleModal = () =>
-    this.setState(({ showModal }) => ({ showModal: !showModal }));
-
-  onDeleteTodo = id =>
-    this.setState(prevState => ({
-      todos: prevState.todos.filter(todo => todo.id !== id),
-    }));
-
-  onCompletedTodo = id => {
-    this.setState(prevState => ({
-      todos: prevState.todos.map(todo => {
-        if (todo.id === id) {
-          return {
-            ...todo,
-            completed: !todo.completed,
-            priority: false,
-          };
-        }
-        return todo;
-      }),
-    }));
-  };
-
-  onHighPriorityTodo = id => {
-    this.setState(prevState => ({
-      todos: prevState.todos.map(todo => {
-        if (todo.id === id) {
-          return {
-            ...todo,
-            priority: !todo.priority,
-          };
-        }
-        return todo;
-      }),
-    }));
-  };
-
-  fulfillmentCount = () =>
-    this.state.todos.reduce(
-      (acc, { completed }) => (completed ? acc : acc + 1),
-      0
-    );
-
-  onChangeTodos = addsTodos => {
-    this.setState(prevState => ({
-      todos: [...prevState.todos, addsTodos],
-    }));
-  };
-
-  clearTodos = () => {
-    this.setState({
-      todos: [],
-    });
-  };
-
-  render() {
-    const { todos, showModal, page } = this.state;
-    const fulfillmentCount = this.fulfillmentCount;
-    const onChangeTodos = this.onChangeTodos;
-    const onCompletedTodo = this.onCompletedTodo;
-    const onHighPriorityTodo = this.onHighPriorityTodo;
-    const onDeleteTodo = this.onDeleteTodo;
-    const toggleModal = this.toggleModal;
-    const changePage = this.changePage;
-    const clearTodos = this.clearTodos;
-
-    return (
-      <>
-        <Header>
-          <Container>
-            <Time />
-            <Title>To Do</Title>
-            <div>
-              <p>Загальна кількість: {todos.length}</p>
-              <p>До виконання: {fulfillmentCount()}</p>
-            </div>
-            <Controls>
-              <Btns>
-                <BtnPage
-                  type="button"
-                  page={page}
-                  onClick={() => {
-                    changePage('all');
-                  }}
-                >
-                  Всі
-                </BtnPage>
-                <BtnPage
-                  type="button"
-                  page={page}
-                  onClick={() => {
-                    changePage('active');
-                  }}
-                >
-                  Активні
-                </BtnPage>
-                <BtnPage
-                  page={page}
-                  type="button"
-                  onClick={() => {
-                    changePage('completed');
-                  }}
-                >
-                  Виконані
-                </BtnPage>
-              </Btns>
-
-              <AddDelBtnWrap>
-                <AddBtn type="button" onClick={toggleModal}>
-                  Додати картку
-                </AddBtn>
-                <AddBtn type="button" onClick={clearTodos}>
-                  Очистити все
-                </AddBtn>
-              </AddDelBtnWrap>
-            </Controls>
-          </Container>
-        </Header>
-        <Container>
-          <TodoList
-            todos={todos}
-            page={page}
-            onDeleteTodo={onDeleteTodo}
-            onCompletedTodo={onCompletedTodo}
-            onHighPriorityTodo={onHighPriorityTodo}
-            onToggleModal={toggleModal}
-          />
-          {showModal && (
-            <Modal onClose={toggleModal}>
-              <FormAdd onChange={onChangeTodos} onClose={toggleModal}></FormAdd>
-              <CloseBtn type="button" onClick={toggleModal}>
-                <GrClose size={24}></GrClose>
-              </CloseBtn>
-            </Modal>
-          )}
-        </Container>
-        <GlobalStyle />
-      </>
-    );
-  }
-}
+  const toggleModal = () => setShowModal(!showModal);
+  return (
+    <>
+      <Control todo={todo} toggleModal={toggleModal}></Control>
+      {showModal && (
+        <Modal onClose={toggleModal}>
+          <FormAdd onChange={onChange} onClose={toggleModal}></FormAdd>
+          <CloseBtn type="button" onClick={toggleModal}>
+            <GrClose size={24}></GrClose>
+          </CloseBtn>
+        </Modal>
+      )}
+      <GlobalStyle />
+    </>
+  );
+};

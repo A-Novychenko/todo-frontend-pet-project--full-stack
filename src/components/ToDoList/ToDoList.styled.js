@@ -38,7 +38,6 @@ export const Item = styled.li`
 
   &:hover {
     transform: scale(1.05);
-    z-index: 999;
   }
 `;
 
@@ -59,7 +58,7 @@ export const AddItem = styled.button`
   color: green;
   transition: color 200ms linear, background-color 200ms linear;
 
-  &:hover {
+  :hover {
     background-color: green;
     color: white;
   }

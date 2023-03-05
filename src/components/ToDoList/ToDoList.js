@@ -102,6 +102,7 @@ TodoList.propTypes = {
       id: PropTypes.string.isRequired,
       text: PropTypes.string.isRequired,
       completed: PropTypes.bool.isRequired,
+      priority: PropTypes.bool.isRequired,
     }).isRequired
   ).isRequired,
 };

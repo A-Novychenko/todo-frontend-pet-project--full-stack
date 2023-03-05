@@ -1,7 +1,8 @@
 import { useState, useEffect } from 'react';
+import { PropTypes } from 'prop-types';
 import * as API from '../../services/api';
 import { TodoList } from 'components/ToDoList';
-import { GrClose } from 'react-icons/gr';
+
 import {
   Container,
   Header,
@@ -11,42 +12,46 @@ import {
   AddBtn,
   AddDelBtnWrap,
   Controls,
-} from './App.styled';
-import { FormAdd } from 'components/FormAdd/FormAdd';
+} from './Control.styled';
+
 import { GlobalStyle } from 'constants/GlobalStyle';
-import { Modal, CloseBtn } from 'components/Modal';
+
 import { Time } from 'components/Time';
 
-export const AppHook = () => {
+export const Control = ({ todo, toggleModal }) => {
   const [todos, setTodos] = useState([]);
   const [page, setPage] = useState('all');
-  const [showModal, setShowModal] = useState(false);
-
-  const addTodo = async todo => {
-    const todoAdd = await API.addTodo(todo);
-    setTodos(prevState => [...prevState, todoAdd]);
-    console.log('ADD resp', todoAdd);
-  };
-
-  const onDeleteTodo = async id => {
-    const resp = await API.delTodo(id);
-    console.log(resp);
-    setTodos(() => todos.filter(todo => todo.id !== id));
-  };
 
   useEffect(() => {
-    async function fetchData() {
-      const response = await API.getTodo();
-      setTodos(response);
+    const addTodo = async todo => {
+      await API.addTodo(todo);
+      const todoAdd = await API.getTodo();
+      setTodos(todoAdd);
+    };
+    if (todo) {
+      addTodo(todo);
     }
-    fetchData();
-  }, [setTodos]);
+    return () => [];
+  }, [todo]);
+
+  useEffect(() => {
+    const addTodo = async () => {
+      const todoAdd = await API.getTodo();
+
+      setTodos(todoAdd);
+    };
+    addTodo();
+  }, []);
+
+  const onDeleteTodo = async id => {
+    await API.delTodo(id);
+
+    setTodos(() => todos.filter(todo => todo.id !== id));
+  };
 
   const changePage = type => {
     setPage(type);
   };
-
-  const toggleModal = () => setShowModal(!showModal);
 
   const onCompletedTodo = async id => {
     const changeTodo = {
@@ -86,9 +91,14 @@ export const AppHook = () => {
     return todos.reduce((acc, { completed }) => (completed ? acc : acc + 1), 0);
   };
 
-  const clearTodos = () => {
+  const clearTodos = async () => {
+    const clear = async () => {
+      for (const todo of todos) {
+        await API.delTodo(todo.id);
+      }
+    };
+    await clear();
     setTodos([]);
-    addTodo([]);
   };
 
   return (
@@ -152,17 +162,17 @@ export const AppHook = () => {
           onHighPriorityTodo={onHighPriorityTodo}
           onToggleModal={toggleModal}
         />
-        {showModal && (
-          <Modal onClose={toggleModal}>
-            {/* <FormAdd onClose={toggleModal}></FormAdd> */}
-            <FormAdd onChange={addTodo} onClose={toggleModal}></FormAdd>
-            <CloseBtn type="button" onClick={toggleModal}>
-              <GrClose size={24}></GrClose>
-            </CloseBtn>
-          </Modal>
-        )}
       </Container>
       <GlobalStyle />
     </>
   );
+};
+
+Control.protoType = {
+  todo: PropTypes.shape({
+    id: PropTypes.string.isRequired,
+    text: PropTypes.string.isRequired,
+    completed: PropTypes.bool.isRequired,
+    priority: PropTypes.bool.isRequired,
+  }),
 };
