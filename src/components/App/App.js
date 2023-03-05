@@ -15,12 +15,14 @@ import { FormAdd } from 'components/FormAdd/FormAdd';
 import { GlobalStyle } from 'constants/GlobalStyle';
 import { Modal, CloseBtn } from 'components/Modal';
 import { Time } from 'components/Time';
+// import { addTodo, getTodo } from 'services/api';
 
 export class App extends Component {
   state = {
     todos: [],
     showModal: false,
     page: 'all',
+    // id: 0,
   };
 
   // shouldComponentUpdate(nextProps, nextState) {
@@ -31,14 +33,22 @@ export class App extends Component {
   // при перезагрузке/первой загрузке не происходит ре-рендер с локалстореджа
 
   componentDidMount() {
+    // const todos = getTodo();
+    // if (todos !== null) {
+    //   this.setState({ todos });
+    // }
     const todos = JSON.parse(localStorage.getItem('todos'));
     if (todos !== null) {
       this.setState({ todos });
     }
   }
 
-  componentDidUpdate(prevProps, prevState) {
+  async componentDidUpdate(prevProps, prevState) {
     if (prevState.todos !== this.state.todos) {
+      // const todos = await addTodo(this.state.todos);
+      // this.setState(prevState => ({
+      //   todos: [...prevState.todos, todos],
+      // }));
       localStorage.setItem('todos', JSON.stringify(this.state.todos));
     }
   }

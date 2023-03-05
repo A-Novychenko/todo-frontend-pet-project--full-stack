@@ -1,13 +1,12 @@
-import { Form, Field } from 'formik';
 import styled from 'styled-components';
 
-export const FormWrap = styled(Form)`
+export const FormWrap = styled.form`
   display: flex;
   flex-direction: column;
   justify-content: center;
 `;
 
-export const Textarea = styled(Field)`
+export const Textarea = styled.textarea`
   display: flex;
   justify-content: center;
 
