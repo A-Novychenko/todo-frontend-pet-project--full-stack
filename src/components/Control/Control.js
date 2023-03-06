@@ -17,10 +17,12 @@ import {
 import { GlobalStyle } from 'constants/GlobalStyle';
 
 import { Time } from 'components/Time';
+import { ThreeCircles } from 'react-loader-spinner';
 
 export const Control = ({ todo, toggleModal }) => {
   const [todos, setTodos] = useState([]);
   const [page, setPage] = useState('all');
+  const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
     const addTodo = async todo => {
@@ -92,9 +94,16 @@ export const Control = ({ todo, toggleModal }) => {
   };
 
   const clearTodos = async () => {
+    setIsLoading(true);
     const clear = async () => {
-      for (const todo of todos) {
-        await API.delTodo(todo.id);
+      try {
+        for (const todo of todos) {
+          await API.delTodo(todo.id);
+        }
+      } catch (error) {
+        // console.log(error);
+      } finally {
+        setIsLoading(false);
       }
     };
     await clear();
@@ -163,6 +172,27 @@ export const Control = ({ todo, toggleModal }) => {
           onToggleModal={toggleModal}
         />
       </Container>
+      {isLoading && (
+        <Container>
+          <ThreeCircles
+            height="300"
+            width="300"
+            color="#4fa94d"
+            wrapperStyle={{
+              position: 'absolute',
+              top: '50%',
+              left: '50%',
+              transform: 'translate(-50%, -50%)',
+            }}
+            wrapperClass=""
+            visible={true}
+            ariaLabel="three-circles-rotating"
+            outerCircleColor=""
+            innerCircleColor=""
+            middleCircleColor=""
+          />
+        </Container>
+      )}
       <GlobalStyle />
     </>
   );
