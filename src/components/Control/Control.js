@@ -23,85 +23,82 @@ export const Control = ({ todo, toggleModal }) => {
   const [todos, setTodos] = useState([]);
   const [page, setPage] = useState('all');
   const [isLoading, setIsLoading] = useState(false);
+  const [fulfillmentCount, setFulfillmentCount] = useState(0);
 
   useEffect(() => {
-    const addTodo = async todo => {
-      await API.addTodo(todo);
-      const todoAdd = await API.getTodo();
-      setTodos(todoAdd);
+    const getTodos = async () => {
+      try {
+        setIsLoading(true);
+        setTodos(await API.getTodo());
+      } catch (error) {
+        console.log('error;', error.message);
+      } finally {
+        setIsLoading(false);
+      }
+    };
+    getTodos();
+  }, []);
+
+  useEffect(() => {
+    const addTodo = async () => {
+      try {
+        setIsLoading(true);
+        await API.addTodo(todo);
+        setTodos(await API.getTodo());
+      } catch (error) {
+        console.log('error;', error.message);
+      } finally {
+        setIsLoading(false);
+      }
     };
     if (todo) {
-      addTodo(todo);
+      addTodo();
     }
     return () => [];
   }, [todo]);
 
   useEffect(() => {
-    const addTodo = async () => {
-      const todoAdd = await API.getTodo();
-
-      setTodos(todoAdd);
-    };
-    addTodo();
-  }, []);
+    setFulfillmentCount(
+      todos.reduce((acc, { completed }) => (completed ? acc : acc + 1), 0)
+    );
+  }, [todos]);
 
   const onDeleteTodo = async id => {
-    await API.delTodo(id);
-
-    setTodos(() => todos.filter(todo => todo.id !== id));
+    try {
+      setIsLoading(true);
+      await API.delTodo(id);
+      setTodos(await API.getTodo());
+    } catch (error) {
+      console.log('error;', error.message);
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   const changePage = type => {
     setPage(type);
   };
 
-  const onCompletedTodo = async id => {
-    const changeTodo = {
-      ...todos.find(todo => todo.id === id),
-      completed: !todos.find(todo => todo.id === id).completed,
-      priority: false,
-    };
-
-    await API.updTodo(changeTodo);
-    setTodos(() =>
-      todos.map(todo => {
-        if (todo.id === changeTodo.id) {
-          return { ...todo, ...changeTodo };
-        }
-        return todo;
-      })
-    );
-  };
-
-  const onHighPriorityTodo = async id => {
-    const changeTodo = {
-      ...todos.find(todo => todo.id === id),
-      priority: !todos.find(todo => todo.id === id).priority,
-    };
-    await API.updTodo(changeTodo);
-    setTodos(() =>
-      todos.map(todo => {
-        if (todo.id === changeTodo.id) {
-          return { ...todo, ...changeTodo };
-        }
-        return todo;
-      })
-    );
-  };
-
-  const fulfillmentCount = () => {
-    return todos.reduce((acc, { completed }) => (completed ? acc : acc + 1), 0);
+  const statusChange = async (id, config) => {
+    try {
+      setIsLoading(true);
+      const changeTodo = todos.find(todo => todo.id === id);
+      await API.updTodo({ ...changeTodo, ...config });
+      setTodos(await API.getTodo());
+    } catch (error) {
+      console.log('error;', error.message);
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   const clearTodos = async () => {
     setIsLoading(true);
     const clear = async () => {
       try {
-        for (const todo of todos) {
-          await API.delTodo(todo.id);
-        }
+        await API.resetTodo();
       } catch (error) {
-        // console.log(error);
+        console.log(error.message);
       } finally {
         setIsLoading(false);
       }
@@ -118,7 +115,7 @@ export const Control = ({ todo, toggleModal }) => {
           <Title>To Do</Title>
           <div>
             <p>Загальна кількість: {todos.length}</p>
-            <p>До виконання: {fulfillmentCount()}</p>
+            <p>До виконання: {fulfillmentCount}</p>
           </div>
           <Controls>
             <Btns>
@@ -167,8 +164,9 @@ export const Control = ({ todo, toggleModal }) => {
           todos={todos}
           page={page}
           onDeleteTodo={onDeleteTodo}
-          onCompletedTodo={onCompletedTodo}
-          onHighPriorityTodo={onHighPriorityTodo}
+          onStatus={statusChange}
+          // onCompletedTodo={onCompletedTodo}
+          // onHighPriorityTodo={onHighPriorityTodo}
           onToggleModal={toggleModal}
         />
       </Container>

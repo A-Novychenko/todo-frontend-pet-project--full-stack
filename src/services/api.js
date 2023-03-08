@@ -21,3 +21,8 @@ export const delTodo = async id => {
   const resp = await axios.delete(`/todos/${id}`);
   return resp.data;
 };
+
+export const resetTodo = async fields => {
+  const resp = await axios.put(`/todos/[${[]}`);
+  return resp.data;
+};

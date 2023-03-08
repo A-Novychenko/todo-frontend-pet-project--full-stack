@@ -14,8 +14,7 @@ export const ToDo = ({
   priority,
   text,
   onDeleteTodo,
-  onCompletedTodo,
-  onHighPriorityTodo,
+  onStatus,
   id,
 }) => {
   return (
@@ -29,7 +28,7 @@ export const ToDo = ({
               <MdLowPriority
                 type="button"
                 className="js-deleteId"
-                onClick={e => onHighPriorityTodo(id)}
+                onClick={() => onStatus(id, { priority: false })}
                 size={28}
                 fill={'darkgoldenrod'}
               ></MdLowPriority>
@@ -37,7 +36,7 @@ export const ToDo = ({
               <FcHighPriority
                 type="button"
                 className="js-deleteId"
-                onClick={e => onHighPriorityTodo(id)}
+                onClick={() => onStatus(id, { priority: true })}
                 size={28}
               ></FcHighPriority>
             ))}
@@ -45,7 +44,7 @@ export const ToDo = ({
             <MdSettingsBackupRestore
               type="button"
               className="js-deleteId"
-              onClick={e => onCompletedTodo(id)}
+              onClick={() => onStatus(id, { completed: false })}
               size={28}
               fill={'darkgoldenrod'}
             ></MdSettingsBackupRestore>
@@ -53,7 +52,7 @@ export const ToDo = ({
             <MdOutlineDoneOutline
               type="button"
               className="js-deleteId"
-              onClick={e => onCompletedTodo(id)}
+              onClick={() => onStatus(id, { completed: true })}
               size={28}
               fill={'green'}
             ></MdOutlineDoneOutline>

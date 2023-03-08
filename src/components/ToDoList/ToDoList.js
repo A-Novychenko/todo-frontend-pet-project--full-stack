@@ -7,9 +7,8 @@ export const TodoList = ({
   todos,
   page,
   onDeleteTodo,
-  onCompletedTodo,
   onToggleModal,
-  onHighPriorityTodo,
+  onStatus,
 }) => (
   <>
     {(page === 'all' || page === 'completed') && (
@@ -26,8 +25,7 @@ export const TodoList = ({
                         completed={completed}
                         text={text}
                         onDeleteTodo={onDeleteTodo}
-                        onCompletedTodo={onCompletedTodo}
-                        onHighPriorityTodo={onHighPriorityTodo}
+                        onStatus={onStatus}
                         id={id}
                       ></ToDo>
                     </Item>
@@ -54,8 +52,7 @@ export const TodoList = ({
                         priority={priority}
                         text={text}
                         onDeleteTodo={onDeleteTodo}
-                        onCompletedTodo={onCompletedTodo}
-                        onHighPriorityTodo={onHighPriorityTodo}
+                        onStatus={onStatus}
                         id={id}
                       ></ToDo>
                     </Item>
@@ -77,8 +74,7 @@ export const TodoList = ({
                       completed={completed}
                       text={text}
                       onDeleteTodo={onDeleteTodo}
-                      onCompletedTodo={onCompletedTodo}
-                      onHighPriorityTodo={onHighPriorityTodo}
+                      onStatus={onStatus}
                       id={id}
                     ></ToDo>
                   </Item>

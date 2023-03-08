@@ -22,7 +22,6 @@ export const FormAdd = ({ onChange, onClose }) => {
     const priority = false;
 
     if (text.trim().length) {
-      // onChange({ text, completed, priority });
       onChange({ id, text, completed, priority });
       onClose();
     } else {
