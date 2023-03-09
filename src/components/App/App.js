@@ -1,5 +1,6 @@
 import { FormAdd } from 'components/FormAdd/FormAdd';
 import { CloseBtn, Modal } from 'components/Modal';
+import { UserMenu } from 'components/UserMenu';
 import { GlobalStyle } from 'constants/GlobalStyle';
 import { useState } from 'react';
 import { GrClose } from 'react-icons/gr';
@@ -15,6 +16,7 @@ export const App = () => {
   const toggleModal = () => setShowModal(!showModal);
   return (
     <>
+      <UserMenu></UserMenu>
       <Control todo={todo} toggleModal={toggleModal}></Control>
       {showModal && (
         <Modal onClose={toggleModal}>
