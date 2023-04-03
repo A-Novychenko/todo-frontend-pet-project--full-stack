@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-axios.defaults.baseURL = 'https://6403b8063bdc59fa8f2bad68.mockapi.io';
+axios.defaults.baseURL = 'https://642b3417d7081590f91e85c9.mockapi.io';
 
 export const addTodo = async todo => {
   const resp = await axios.post('/todos', todo);
