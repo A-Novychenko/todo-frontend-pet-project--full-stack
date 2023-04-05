@@ -4,6 +4,7 @@
   "private": true,
   "homepage": "https://A-Novychenko.github.io/to-do/",
   "dependencies": {
+    "@reduxjs/toolkit": "^1.9.3",
     "@testing-library/jest-dom": "^5.16.3",
     "@testing-library/react": "^12.1.4",
     "@testing-library/user-event": "^13.5.0",
@@ -19,6 +20,7 @@
     "react-icons": "^4.7.1",
     "react-loader-spinner": "^5.3.4",
     "react-modal": "^3.16.1",
+    "react-redux": "^8.0.5",
     "react-scripts": "5.0.1",
     "reactjs-popup": "^2.0.5",
     "styled-components": "^5.3.6",
