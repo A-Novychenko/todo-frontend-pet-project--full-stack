@@ -8,6 +8,7 @@ import {
 } from 'react-icons/md';
 
 import { Description, WrapToDo, InnerToDo } from './ToDo.styled';
+import { useDeleteTodoMutation } from 'redux/todoSlice';
 
 export const ToDo = ({
   completed,
@@ -17,6 +18,8 @@ export const ToDo = ({
   onStatus,
   id,
 }) => {
+  const [deleteTodo] = useDeleteTodoMutation();
+
   return (
     <>
       <WrapToDo>
@@ -61,7 +64,7 @@ export const ToDo = ({
           <RiDeleteBinLine
             type="button"
             className="js-deleteId"
-            onClick={e => onDeleteTodo(id)}
+            onClick={e => deleteTodo(id)}
             size={28}
             fill={'brown'}
           ></RiDeleteBinLine>
@@ -72,7 +75,7 @@ export const ToDo = ({
 };
 
 ToDo.propTypes = {
-  onDeleteTodo: PropTypes.func.isRequired,
+  // onDeleteTodo: PropTypes.func.isRequired,
   id: PropTypes.string.isRequired,
   text: PropTypes.string.isRequired,
   completed: PropTypes.bool.isRequired,

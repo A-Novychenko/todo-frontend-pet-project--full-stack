@@ -1,8 +1,8 @@
 import { useForm } from 'react-hook-form';
 import PropTypes from 'prop-types';
-import { nanoid } from 'nanoid';
 import Notiflix from 'notiflix';
 import { FormWrap, Textarea, FormContainer, SaveBtn } from './FormAdd.styled';
+import { useAddTodoMutation } from 'redux/todoSlice';
 
 Notiflix.Notify.init({
   width: '500px',
@@ -15,19 +15,20 @@ Notiflix.Notify.init({
 
 export const FormAdd = ({ onChange, onClose }) => {
   const { register, handleSubmit } = useForm();
+  const [addTodo] = useAddTodoMutation();
 
-  const onSubmit = ({ text }) => {
-    const id = nanoid();
-    const completed = false;
-    const priority = false;
-
-    if (text.trim().length) {
-      onChange({ id, text, completed, priority });
-      onClose();
-    } else {
+  const onSubmit = async ({ text }) => {
+    if (!text.trim().length) {
       Notiflix.Notify.failure(
         'Нічого не записали! Для збереження запишіть щось в текстове поле'
       );
+      return;
+    }
+    try {
+      await addTodo(text);
+      onClose();
+    } catch (error) {
+      console.log('error', error);
     }
   };
 

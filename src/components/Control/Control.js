@@ -18,62 +18,21 @@ import { GlobalStyle } from 'constants/GlobalStyle';
 
 import { Time } from 'components/Time';
 import { ThreeCircles } from 'react-loader-spinner';
+import { useGetTodosQuery } from 'redux/todoSlice';
 
 export const Control = ({ todo, toggleModal }) => {
-  const [todos, setTodos] = useState([]);
   const [page, setPage] = useState('all');
-  const [isLoading, setIsLoading] = useState(false);
+
   const [fulfillmentCount, setFulfillmentCount] = useState(0);
 
-  useEffect(() => {
-    const getTodos = async () => {
-      try {
-        setIsLoading(true);
-        setTodos(await API.getTodo());
-      } catch (error) {
-        console.log('error;', error.message);
-      } finally {
-        setIsLoading(false);
-      }
-    };
-    getTodos();
-  }, []);
+  const { data: todos, isLoading } = useGetTodosQuery();
 
   useEffect(() => {
-    const addTodo = async () => {
-      try {
-        setIsLoading(true);
-        await API.addTodo(todo);
-        setTodos(await API.getTodo());
-      } catch (error) {
-        console.log('error;', error.message);
-      } finally {
-        setIsLoading(false);
-      }
-    };
-    if (todo) {
-      addTodo();
-    }
-    return () => [];
-  }, [todo]);
-
-  useEffect(() => {
-    setFulfillmentCount(
-      todos.reduce((acc, { completed }) => (completed ? acc : acc + 1), 0)
-    );
+    todos &&
+      setFulfillmentCount(
+        todos.reduce((acc, { completed }) => (completed ? acc : acc + 1), 0)
+      );
   }, [todos]);
-
-  const onDeleteTodo = async id => {
-    try {
-      setIsLoading(true);
-      await API.delTodo(id);
-      setTodos(await API.getTodo());
-    } catch (error) {
-      console.log('error;', error.message);
-    } finally {
-      setIsLoading(false);
-    }
-  };
 
   const changePage = type => {
     setPage(type);
@@ -81,30 +40,24 @@ export const Control = ({ todo, toggleModal }) => {
 
   const statusChange = async (id, config) => {
     try {
-      setIsLoading(true);
       const changeTodo = todos.find(todo => todo.id === id);
       await API.updTodo({ ...changeTodo, ...config });
-      setTodos(await API.getTodo());
     } catch (error) {
       console.log('error;', error.message);
     } finally {
-      setIsLoading(false);
     }
   };
 
   const clearTodos = async () => {
-    setIsLoading(true);
     const clear = async () => {
       try {
         await API.resetTodo();
       } catch (error) {
         console.log(error.message);
       } finally {
-        setIsLoading(false);
       }
     };
     await clear();
-    setTodos([]);
   };
 
   return (
@@ -114,7 +67,7 @@ export const Control = ({ todo, toggleModal }) => {
           <Time />
           <Title>To Do</Title>
           <div>
-            <p>Загальна кількість: {todos.length}</p>
+            <p>Загальна кількість: {todos && todos.length}</p>
             <p>До виконання: {fulfillmentCount}</p>
           </div>
           <Controls>
@@ -163,10 +116,7 @@ export const Control = ({ todo, toggleModal }) => {
         <TodoList
           todos={todos}
           page={page}
-          onDeleteTodo={onDeleteTodo}
           onStatus={statusChange}
-          // onCompletedTodo={onCompletedTodo}
-          // onHighPriorityTodo={onHighPriorityTodo}
           onToggleModal={toggleModal}
         />
       </Container>
