@@ -2,7 +2,11 @@ import { useForm } from 'react-hook-form';
 import PropTypes from 'prop-types';
 import Notiflix from 'notiflix';
 import { FormWrap, Textarea, FormContainer, SaveBtn } from './FormAdd.styled';
-import { useAddTodoMutation } from 'redux/todoSlice';
+import {
+  useAddTodoMutation,
+  useDeleteTodoMutation,
+  useGetTodosQuery,
+} from 'redux/todoSlice';
 
 Notiflix.Notify.init({
   width: '500px',
@@ -16,7 +20,8 @@ Notiflix.Notify.init({
 export const FormAdd = ({ onChange, onClose }) => {
   const { register, handleSubmit } = useForm();
   const [addTodo] = useAddTodoMutation();
-
+  const { data: todos } = useGetTodosQuery();
+  const [deleteTodo] = useDeleteTodoMutation();
   const onSubmit = async ({ text }) => {
     if (!text.trim().length) {
       Notiflix.Notify.failure(
@@ -25,6 +30,16 @@ export const FormAdd = ({ onChange, onClose }) => {
       return;
     }
     try {
+      if (todos.length >= 100) {
+        if (!window.confirm('Вже більше 100 todo. Почати перезапис?')) {
+          onClose();
+          return;
+        }
+        await deleteTodo(todos[0].id);
+        await addTodo(text);
+        onClose();
+        return;
+      }
       await addTodo(text);
       onClose();
     } catch (error) {
