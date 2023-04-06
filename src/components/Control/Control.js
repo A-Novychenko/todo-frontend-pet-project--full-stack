@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
-import { PropTypes } from 'prop-types';
-import * as API from '../../services/api';
+// import { PropTypes } from 'prop-types';
+
 import { TodoList } from 'components/ToDoList';
 
 import {
@@ -18,14 +18,13 @@ import { GlobalStyle } from 'constants/GlobalStyle';
 
 import { Time } from 'components/Time';
 import { ThreeCircles } from 'react-loader-spinner';
-import { useGetTodosQuery } from 'redux/todoSlice';
+import { useChangeStatusMutation, useGetTodosQuery } from 'redux/todoSlice';
 
-export const Control = ({ todo, toggleModal }) => {
+export const Control = ({ toggleModal }) => {
   const [page, setPage] = useState('all');
-
   const [fulfillmentCount, setFulfillmentCount] = useState(0);
-
   const { data: todos, isLoading } = useGetTodosQuery();
+  const [changeStatus] = useChangeStatusMutation();
 
   useEffect(() => {
     todos &&
@@ -41,23 +40,11 @@ export const Control = ({ todo, toggleModal }) => {
   const statusChange = async (id, config) => {
     try {
       const changeTodo = todos.find(todo => todo.id === id);
-      await API.updTodo({ ...changeTodo, ...config });
+      changeStatus({ ...changeTodo, ...config });
     } catch (error) {
       console.log('error;', error.message);
     } finally {
     }
-  };
-
-  const clearTodos = async () => {
-    const clear = async () => {
-      try {
-        await API.resetTodo();
-      } catch (error) {
-        console.log(error.message);
-      } finally {
-      }
-    };
-    await clear();
   };
 
   return (
@@ -105,7 +92,7 @@ export const Control = ({ todo, toggleModal }) => {
               <AddBtn type="button" onClick={toggleModal}>
                 Додати картку
               </AddBtn>
-              <AddBtn type="button" onClick={clearTodos}>
+              <AddBtn type="button" onClick={null}>
                 Очистити все
               </AddBtn>
             </AddDelBtnWrap>
@@ -146,11 +133,11 @@ export const Control = ({ todo, toggleModal }) => {
   );
 };
 
-Control.protoType = {
-  todo: PropTypes.shape({
-    id: PropTypes.string.isRequired,
-    text: PropTypes.string.isRequired,
-    completed: PropTypes.bool.isRequired,
-    priority: PropTypes.bool.isRequired,
-  }),
-};
+// Control.protoType = {
+//   todo: PropTypes.shape({
+//     id: PropTypes.string.isRequired,
+//     text: PropTypes.string.isRequired,
+//     completed: PropTypes.bool.isRequired,
+//     priority: PropTypes.bool.isRequired,
+//   }),
+// };
