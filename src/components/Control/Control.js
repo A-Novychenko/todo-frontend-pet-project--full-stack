@@ -1,4 +1,5 @@
 // import { PropTypes } from 'prop-types';
+
 import { useState, useEffect } from 'react';
 
 import { TodoList } from 'components/ToDoList';
@@ -15,8 +16,8 @@ import {
 } from './Control.styled';
 
 import { GlobalStyle } from 'constants/GlobalStyle';
-
 import { Time } from 'components/Time';
+
 import { ThreeCircles } from 'react-loader-spinner';
 import { useChangeStatusMutation, useGetTodosQuery } from 'redux/todoSlice';
 
