@@ -1,5 +1,5 @@
-const { createSlice } = require('@reduxjs/toolkit');
-const { registerUser } = require('./authOperations');
+import { createSlice } from '@reduxjs/toolkit';
+import { registerUser } from './authOperations';
 
 const authSlice = createSlice({
   name: 'auth',
