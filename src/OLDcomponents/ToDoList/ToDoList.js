@@ -2,7 +2,7 @@
 import { ToDo } from 'components/ToDo';
 import { List, Item, AddItem } from './ToDoList.styled';
 import { MdOutlineAddCircleOutline } from 'react-icons/md';
-import { useGetTodosQuery } from 'redux/todoSlice';
+import { useGetTodosQuery } from 'redux/todos/todoSlice';
 
 export const TodoList = ({ page, onDeleteTodo, onToggleModal, onStatus }) => {
   const { data: todos } = useGetTodosQuery();

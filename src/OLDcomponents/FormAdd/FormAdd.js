@@ -6,7 +6,7 @@ import {
   useAddTodoMutation,
   useDeleteTodoMutation,
   useGetTodosQuery,
-} from 'redux/todoSlice';
+} from 'redux/todos/todoSlice';
 
 Notiflix.Notify.init({
   width: '500px',

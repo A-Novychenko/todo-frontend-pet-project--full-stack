@@ -2,22 +2,22 @@
 // import { Toaster } from 'react-hot-toast';
 // import { AppBar } from './AppBar/AppBar';
 // import { Suspense } from 'react';
+import { Container } from '@mui/material';
+
+import { AppBar } from './AppBar';
 
 export const Layout = () => {
   return (
-    <div
-      style={{
-        maxWidth: 960,
-        margin: '0 auto',
-        padding: '0 16px',
-        color: 'green',
-      }}
-    >
-      {/* <AppBar />
-      <Suspense fallback={null}>
-        <Outlet />
-      </Suspense>
-      <Toaster position="top-right" reverseOrder={false} /> */}
-    </div>
+    <>
+      <AppBar />
+
+      <div>
+        <Container maxWidth="xl">
+          {/* <Suspense fallback={null}>
+            <Outlet />
+          </Suspense> */}
+        </Container>
+      </div>
+    </>
   );
 };

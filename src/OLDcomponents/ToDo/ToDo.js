@@ -8,7 +8,7 @@ import {
 } from 'react-icons/md';
 
 import { Description, WrapToDo, InnerToDo } from './ToDo.styled';
-import { useDeleteTodoMutation } from 'redux/todoSlice';
+import { useDeleteTodoMutation } from 'redux/todos/todoSlice';
 
 export const ToDo = ({
   completed,

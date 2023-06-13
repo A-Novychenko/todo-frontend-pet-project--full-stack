@@ -1,5 +1,11 @@
-import { AppBar } from './AppBar';
+import RegisterPage from 'pages/RegisterPage';
+import { Layout } from './Layout';
 
 export const App = () => {
-  return <AppBar />;
+  return (
+    <>
+      <Layout />
+      <RegisterPage />
+    </>
+  );
 };

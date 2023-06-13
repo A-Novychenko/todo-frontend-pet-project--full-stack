@@ -19,7 +19,10 @@ import { GlobalStyle } from 'constants/GlobalStyle';
 import { Time } from 'components/Time';
 
 import { ThreeCircles } from 'react-loader-spinner';
-import { useChangeStatusMutation, useGetTodosQuery } from 'redux/todoSlice';
+import {
+  useChangeStatusMutation,
+  useGetTodosQuery,
+} from 'redux/todos/todoSlice';
 
 export const Control = ({ toggleModal }) => {
   const [page, setPage] = useState('all');
