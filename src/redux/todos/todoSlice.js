@@ -1,45 +1,31 @@
-import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
+import { createSlice } from '@reduxjs/toolkit';
+import { getAllTodo, addTodo, updateTodo } from './todosOperations';
 
-export const todosApi = createApi({
-  reducerPath: 'todos',
-  baseQuery: fetchBaseQuery({
-    baseUrl: 'https://642b3417d7081590f91e85c9.mockapi.io',
-  }),
-  tagTypes: ['Todos'],
-  endpoints: builder => ({
-    getTodos: builder.query({
-      query: () => `/todos`,
-      providesTags: ['Todos'],
-    }),
-    addTodo: builder.mutation({
-      query: text => ({
-        url: `/todos`,
-        method: 'POST',
-        body: { text, completed: false, priority: false },
+export const todosApi = createSlice({
+  name: 'todosApi',
+  initialState: {
+    todos: [],
+    isLoading: false,
+    error: null,
+  },
+  extraReducers: builder =>
+    builder
+      .addCase(getAllTodo.fulfilled, (state, { payload }) => {
+        state.todos = payload.todos;
+        state.isLoading = false;
+        state.error = null;
+      })
+      .addCase(addTodo.fulfilled, (state, { payload }) => {
+        state.todos.push(payload.todos);
+        state.isLoading = false;
+        state.error = null;
+      })
+      .addCase(updateTodo.fulfilled, (state, { payload }) => {
+        state.todos.map(todo => {
+          if (todo._id !== payload._id) return todo;
+          return payload;
+        });
       }),
-      invalidatesTags: ['Todos'],
-    }),
-    changeStatus: builder.mutation({
-      query: config => ({
-        url: `/todos/${config.id}`,
-        method: 'PUT',
-        body: config,
-      }),
-      invalidatesTags: ['Todos'],
-    }),
-    deleteTodo: builder.mutation({
-      query: id => ({
-        url: `/todos/${id}`,
-        method: 'DELETE',
-      }),
-      invalidatesTags: ['Todos'],
-    }),
-  }),
 });
 
-export const {
-  useGetTodosQuery,
-  useAddTodoMutation,
-  useDeleteTodoMutation,
-  useChangeStatusMutation,
-} = todosApi;
+export const todosReducer = todosApi.reducer;

@@ -1,7 +1,7 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import axios from 'axios';
 
-axios.defaults.baseURL = 'http://localhost:3001/api/users';
+axios.defaults.baseURL = 'http://localhost:3001/api';
 
 const setAuthHeader = token => {
   axios.defaults.headers.common.Authorization = `Bearer ${token}`;
@@ -17,7 +17,7 @@ export const registerUser = createAsyncThunk(
     try {
       const {
         data: { data },
-      } = await axios.post('/register', credentials);
+      } = await axios.post('/users/register', credentials);
 
       return data;
     } catch (e) {
@@ -31,7 +31,7 @@ export const verifyUser = createAsyncThunk(
     try {
       const {
         data: { data },
-      } = await axios.get(`/verify/:${verifyCode}`);
+      } = await axios.get(`/users/verify/:${verifyCode}`);
 
       return data;
     } catch (e) {
@@ -44,7 +44,7 @@ export const loginUser = createAsyncThunk(
   'auth/login',
   async (credentials, { rejectWithValue }) => {
     try {
-      const { data } = await axios.post('/login', credentials);
+      const { data } = await axios.post('/users/login', credentials);
       setAuthHeader(data.data.token);
 
       return data.data;
@@ -58,7 +58,7 @@ export const logoutUser = createAsyncThunk(
   'auth/logout',
   async (_, { rejectWithValue }) => {
     try {
-      await axios.get('/logout');
+      await axios.get('/users/logout');
       clearAuthHeader();
     } catch (e) {
       return rejectWithValue(e.message);

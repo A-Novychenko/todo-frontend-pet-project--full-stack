@@ -26,7 +26,7 @@ import storage from 'redux-persist/lib/storage';
 import { configureStore } from '@reduxjs/toolkit';
 
 // import { filterReducer } from './contacts/filterSlice';
-// import { todosReducer } from './todos/todoSlice';
+import { todosReducer } from './todos/todoSlice';
 import { authReducer } from './auth/authSlice';
 
 const authPersistConfig = {
@@ -38,7 +38,7 @@ const authPersistConfig = {
 export const store = configureStore({
   reducer: {
     auth: persistReducer(authPersistConfig, authReducer),
-    // todos: todosReducer,
+    todos: todosReducer,
     // filter: filterReducer,
   },
   middleware: getDefaultMiddleware =>
