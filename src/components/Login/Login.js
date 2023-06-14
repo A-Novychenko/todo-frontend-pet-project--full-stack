@@ -9,10 +9,10 @@ import {
   Container,
 } from '@mui/material';
 import LoginIcon from '@mui/icons-material/Login';
-import { logIn } from 'redux/auth/authOperations';
+import { loginUser } from 'redux/auth/authOperations';
 import { useState } from 'react';
 
-export const LoginForm = () => {
+export const Login = () => {
   const dispatch = useDispatch();
   const [isErrorMail, setIsErrorMail] = useState(null);
   const [isErrorPass, setIsErrorPass] = useState(null);
@@ -25,7 +25,7 @@ export const LoginForm = () => {
       email: formData.get('email'),
       password: formData.get('password'),
     };
-    dispatch(logIn(data));
+    dispatch(loginUser(data));
     e.target.reset();
   };
 

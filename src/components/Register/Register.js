@@ -13,7 +13,7 @@ import { registerUser } from 'redux/auth/authOperations';
 import { useState } from 'react';
 
 export const Register = () => {
-  const [isErrorName, setIsErrorName] = useState(null);
+  const [isErrorLogin, setIsErrorLogin] = useState(null);
   const [isErrorMail, setIsErrorMail] = useState(null);
   const [isErrorPass, setIsErrorPass] = useState(null);
   const dispatch = useDispatch();
@@ -23,7 +23,7 @@ export const Register = () => {
     const formData = new FormData(e.target);
 
     const data = {
-      name: formData.get('name'),
+      login: formData.get('login'),
       email: formData.get('email'),
       password: formData.get('password'),
     };
@@ -31,11 +31,11 @@ export const Register = () => {
     e.target.reset();
   };
 
-  const handleChangeName = e => {
+  const handleChangeLogin = e => {
     if (e.target.value.trim().length === 0) {
-      setIsErrorName(true);
+      setIsErrorLogin(true);
     } else {
-      setIsErrorName(null);
+      setIsErrorLogin(null);
     }
   };
   const handleChangeEmail = e => {
@@ -84,12 +84,12 @@ export const Register = () => {
               margin="normal"
               required
               fullWidth
-              id="name"
-              label="User name"
-              name="name"
-              onChange={handleChangeName}
-              error={isErrorName}
-              helperText={'Enter your name!'}
+              id="login"
+              label="login"
+              name="login"
+              onChange={handleChangeLogin}
+              error={isErrorLogin}
+              helperText={'Enter your login!'}
             />
             <TextField
               margin="normal"
