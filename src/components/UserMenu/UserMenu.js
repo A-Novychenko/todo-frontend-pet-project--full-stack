@@ -1,12 +1,19 @@
 import { Box, Button, Typography } from '@mui/material';
 import AccountBoxIcon from '@mui/icons-material/AccountBox';
+import { useDispatch, useSelector } from 'react-redux';
+import { logoutUser } from '../../redux/auth/authOperations';
 
 export const UserMenu = () => {
+  const user = useSelector(state => state.auth.user);
+  const dispatch = useDispatch();
+
+  const userName = login => {
+    const name = user.login.split('');
+    name[0] = name[0].toUpperCase();
+    return name.join('');
+  };
+
   return (
-    // <>
-    //   <p>User</p>
-    //   <button to="/">Logout</button>
-    //   </>
     <Box
       component={'div'}
       sx={{
@@ -18,15 +25,15 @@ export const UserMenu = () => {
     >
       <Box sx={{ display: 'flex' }}>
         <AccountBoxIcon sx={{ mr: 1 }} />
-        {/* <Typography>Welcome, {user.name}</Typography> */}
-        <Typography>Welcome, user.name</Typography>
+        <Typography>{userName(user.login)}</Typography>
+        {/* <Typography>Welcome, user.name</Typography> */}
       </Box>
 
       <Button
         component="button"
         type="button"
         variant="outline"
-        // onClick={() => dispatch(logOut())}
+        onClick={() => dispatch(logoutUser())}
       >
         Logout
       </Button>

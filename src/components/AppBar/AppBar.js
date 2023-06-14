@@ -3,14 +3,12 @@ import { Navigation } from 'components/Navigation';
 import { UserMenu } from 'components/UserMenu';
 import { AuthNav } from 'components/AuthNav';
 import { AppBar as AppBarContainer, Box, Container } from '@mui/material';
+import { useSelector } from 'react-redux';
 
 export const AppBar = () => {
+  const isLoggedIn = useSelector(state => state.auth.isLoggedIn);
+
   return (
-    // <Header>
-    //   <Navigation />
-    //   <UserMenu />
-    //   <AuthNav />
-    //   </Header>
     <Box component={'header'}>
       <AppBarContainer position="static" color="primary">
         <Container maxWidth="xl">
@@ -22,8 +20,8 @@ export const AppBar = () => {
             }}
           >
             <Navigation />
-            {/* {isLoggedIn ? <UserMenu /> : <AuthNav />} */}
-            <UserMenu /> <AuthNav />
+            {isLoggedIn ? <UserMenu /> : <AuthNav />}
+            {/* <UserMenu /> <AuthNav /> */}
           </Box>
         </Container>
       </AppBarContainer>
