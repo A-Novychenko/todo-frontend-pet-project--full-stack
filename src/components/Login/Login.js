@@ -25,7 +25,9 @@ export const Login = () => {
       email: formData.get('email'),
       password: formData.get('password'),
     };
+
     dispatch(loginUser(data));
+
     e.target.reset();
   };
 
