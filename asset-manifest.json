@@ -1,10 +1,10 @@
 {
   "files": {
-    "main.js": "/todo-frontend-pet-project--full-stack/static/js/main.9c9c81d2.js",
+    "main.js": "/todo-frontend-pet-project--full-stack/static/js/main.a7b2d59b.js",
     "index.html": "/todo-frontend-pet-project--full-stack/index.html",
-    "main.9c9c81d2.js.map": "/todo-frontend-pet-project--full-stack/static/js/main.9c9c81d2.js.map"
+    "main.a7b2d59b.js.map": "/todo-frontend-pet-project--full-stack/static/js/main.a7b2d59b.js.map"
   },
   "entrypoints": [
-    "static/js/main.9c9c81d2.js"
+    "static/js/main.a7b2d59b.js"
   ]
 }
