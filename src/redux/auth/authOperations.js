@@ -25,6 +25,7 @@ export const registerUser = createAsyncThunk(
     }
   }
 );
+
 export const verifyUser = createAsyncThunk(
   'auth/verify',
   async (verifyCode, { rejectWithValue }) => {
